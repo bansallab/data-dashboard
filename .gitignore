@@ -2,3 +2,6 @@
 /dist/
 node_modules/
 yarn-error.log
+
+src/data/county_month_age_vacc_refusal_age_grp_1_imputed.csv
+src/data/county_fips_grp_pop_wts.csv
