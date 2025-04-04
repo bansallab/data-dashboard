@@ -37,23 +37,28 @@ export default function Scrubber(
             <output name="o" style="margin-left: 0.4em;"></output>
         </label>
     </form>`;
+
     let frame = null;
     let timer = null;
     let interval = null;
+
     function start() {
         form.b.textContent = "Pause";
         if (delay === null) frame = requestAnimationFrame(tick);
         else interval = setInterval(tick, delay);
     }
+
     function stop() {
         form.b.textContent = "Play";
         if (frame !== null) cancelAnimationFrame(frame), (frame = null);
         if (timer !== null) clearTimeout(timer), (timer = null);
         if (interval !== null) clearInterval(interval), (interval = null);
     }
+
     function running() {
         return frame !== null || timer !== null || interval !== null;
     }
+
     function tick() {
         if (
             form.i.valueAsNumber ===
@@ -72,11 +77,13 @@ export default function Scrubber(
         if (delay === null) frame = requestAnimationFrame(tick);
         step();
     }
+
     function step() {
         form.i.valueAsNumber =
             (form.i.valueAsNumber + direction + values.length) % values.length;
         form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
     }
+
     form.i.oninput = (event) => {
         if (event && event.isTrusted && running()) stop();
         form.value = values[form.i.valueAsNumber];
@@ -92,8 +99,13 @@ export default function Scrubber(
         start();
     };
     form.i.oninput();
-    if (autoplay) start();
-    else stop();
+
+    if (autoplay) {
+        start();
+    } else {
+        stop();
+    }
+
     Inputs.disposal(form).then(stop);
 
     return form;

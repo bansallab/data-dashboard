@@ -29,7 +29,7 @@ function filterRefusal(data, year) {
 const coerceRow = (d) => ({
     county_fips: d.county_fips,
     year: Number(d.year),
-    refusal_prop: Number(d.refusal_prop),
+    refusal_prop: Number(d.annual_ratio),
 });
 const vaccRefusal = await FileAttachment("./data/vacc_refusal.csv").csv().then((d) => d.map(coerceRow));
 ```
@@ -51,7 +51,7 @@ const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, fun
 ```
 
 ```js
-const yearVal2Input = Scrubber(d3.range(2016, 2024), {
+const yearVal2Input = Scrubber(d3.range(2016, 2023), {
     delay: 400,
     loopDelay: 1000,
     autoplay: false,
@@ -70,16 +70,16 @@ function topoPlot(year, { width } = {}) {
             unknown: "lightgray",
             type: "linear",
             legend: true,
-            label: "Vaccine refusal percentages",
-            // percent: true, // converts prop to percent
-            domain: [0, 1], // specify value domain
+            label: "Vaccine refusal percentage",
+            percent: true, // converts prop to percent
+            domain: [0, 10], // restrict range, seems to respect percent conversion
         },
         marks: [
             Plot.geo(
                 geoCounties,
                 {
                     fill: (d) => out.get(d.properties.GEOID),
-                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\n\nprop. = ${out.get(d.properties.GEOID).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`,
+                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\npct. = ${roundProp(out.get(d.properties.GEOID))}`,
                     tip: true,
                     strokeWidth: 2,
                 }
@@ -94,13 +94,24 @@ function topoPlot(year, { width } = {}) {
         ]
     });
 
+    const outlineColor = "blue";
     d3.select(plt)
         .selectAll("path")
-        .on("mouseover", function() { d3.select(this).attr("stroke", "red").raise(); })
+        .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).raise(); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null).lower(); });
 
     return plt;
 }
+
+function roundProp(prop) {
+    if (isNaN(prop)) {
+        return NaN;
+    } else {
+        // return pop.toFixed(2);
+        return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+    }
+}
+
 ```
 
 <div class="grid grid-cols-1">
