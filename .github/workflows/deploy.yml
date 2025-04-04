@@ -37,11 +37,11 @@ jobs:
         run: uv python install
       - name: Install Python dependencies
         run: uv sync
-      - name: Activate virtual environment
-        run: source .venv/bin/activate
 
       - name: Build site
-        run: pnpm build
+        run: |
+          source .venv/bin/activate
+          pnpm build
       - name: Upload site files
         uses: actions/upload-pages-artifact@v3
         with:
