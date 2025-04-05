@@ -20,6 +20,10 @@
     "topojson-simplify": "^3.0.3"
   },
   "devDependencies": {
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
+    "globals": "^16.0.0",
+    "prettier": "3.5.3",
     "rimraf": "^5.0.5"
   },
   "engines": {
