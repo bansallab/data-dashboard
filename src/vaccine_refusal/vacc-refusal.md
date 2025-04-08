@@ -121,7 +121,6 @@ function roundProp(prop) {
 
 <div class="grid grid-cols-1">
     <div class="card">
-        <!-- <h2>Vaccine refusal proportions</h2> -->
         ${yearVal2Input}
         ${resize((width) => topoPlot(yearVal2, {width}))}
     </div>
