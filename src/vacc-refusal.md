@@ -63,25 +63,28 @@ function topoPlot(year, { width } = {}) {
     const out = filterRefusal(vaccRefusal, year);
 
     const plt = Plot.plot({
-        projection: "identity", // or "albers-usa"
+        projection: "identity",
         width: width,
         color: {
-            scheme: "Blues",
+            type: "diverging",
+            scheme: "BuRd",
+            pivot: 0.05,
+            symmetric: false,
             unknown: "lightgray",
-            type: "linear",
             legend: true,
-            label: "Vaccine refusal percentage",
-            percent: true, // converts prop to percent
-            domain: [0, 10], // restrict range, seems to respect percent conversion
+            label: "Vaccine refusal proportion",
+            // percent: true, // convert prop to percent
+            domain: [0, 0.1], // restrict range, seems to respect percent conversion
         },
         marks: [
             Plot.geo(
                 geoCounties,
                 {
                     fill: (d) => out.get(d.properties.GEOID),
-                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\npct. = ${roundProp(out.get(d.properties.GEOID))}`,
+                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(out.get(d.properties.GEOID))}`,
                     tip: true,
                     strokeWidth: 2,
+                    className: "county-border",
                 }
             ),
             Plot.geo(
@@ -89,13 +92,15 @@ function topoPlot(year, { width } = {}) {
                 {
                     stroke: "var(--plot-background)",
                     strokeWidth: 0.5,
+                    className: "state-mesh",
                 }
             ),
         ]
     });
 
-    const outlineColor = "blue";
+    const outlineColor = "#ffffff";
     d3.select(plt)
+        .select(".county-border")
         .selectAll("path")
         .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).raise(); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null).lower(); });
