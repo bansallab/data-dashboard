@@ -1,6 +1,6 @@
 ---
 title: Vaccine refusal
-theme: dashboard
+# theme: dashboard
 toc: false
 ---
 
@@ -12,7 +12,7 @@ import * as topojson from "npm:topojson-client";
 import * as Plot from "npm:@observablehq/plot";
 import * as d3 from "npm:d3";
 
-import Scrubber from "./components/Scrubber.js";
+import Scrubber from "../components/Scrubber.js";
 ```
 
 ```js
@@ -31,11 +31,11 @@ const coerceRow = (d) => ({
     year: Number(d.year),
     refusal_prop: Number(d.annual_ratio),
 });
-const vaccRefusal = await FileAttachment("./data/vacc_refusal.csv").csv().then((d) => d.map(coerceRow));
+const vaccRefusal = await FileAttachment("../data/vacc_refusal.csv").csv().then((d) => d.map(coerceRow));
 ```
 
 ```js
-const topoCounties = await FileAttachment("./data/us_counties.json").json();
+const topoCounties = await FileAttachment("../data/us_counties.json").json();
 // returns GeoJSON FeatureCollection
 const geoCounties = topojson.feature(topoCounties, topoCounties.objects.counties);
 ```
