@@ -7,35 +7,35 @@ export default {
             pages: [
                 {
                     name: "Dashboard",
-                    path: "/vaccine_refusal/vacc-refusal",
+                    path: "/vaccine-refusal/vacc-refusal",
                 },
                 {
                     name: "Data",
-                    path: "/vaccine_refusal/data",
+                    path: "/vaccine-refusal/data",
                 },
                 {
                     name: "Analysis",
-                    path: "/vaccine_refusal/analysis",
+                    path: "/vaccine-refusal/analysis",
                 },
             ],
         },
-        {
-            name: "Another section",
-            pages: [
-                {
-                    name: "Dashboard",
-                    path: "/section_2/dashboard",
-                },
-                {
-                    name: "Data",
-                    path: "/section_2/data",
-                },
-                {
-                    name: "Analysis",
-                    path: "/section_2/analysis",
-                },
-            ],
-        },
+        // {
+        //     name: "Another section",
+        //     pages: [
+        //         {
+        //             name: "Dashboard",
+        //             path: "/section-2/dashboard",
+        //         },
+        //         {
+        //             name: "Data",
+        //             path: "/section-2/data",
+        //         },
+        //         {
+        //             name: "Analysis",
+        //             path: "/section-2/analysis",
+        //         },
+        //     ],
+        // },
     ],
     // Content to add to the head of the page, e.g. for a favicon:
     head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
