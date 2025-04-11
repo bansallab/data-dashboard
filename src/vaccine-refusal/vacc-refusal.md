@@ -51,13 +51,13 @@ const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, fun
 ```
 
 ```js
-const yearVal2Input = Scrubber(d3.range(2016, 2023), {
+const yearValInput = Scrubber(d3.range(2016, 2023), {
     delay: 400,
     loopDelay: 1000,
     autoplay: false,
     loop: false,
 });
-const yearVal2 = view(yearVal2Input);
+const yearVal = view(yearValInput);
 
 function topoPlot(year, { width } = {}) {
     const out = filterRefusal(vaccRefusal, year);
@@ -65,13 +65,17 @@ function topoPlot(year, { width } = {}) {
     const plt = Plot.plot({
         projection: "identity",
         width: width,
+        height: 550,
+        margin: 0,
         color: {
             type: "diverging",
             scheme: "BuRd",
             pivot: 0.05,
             symmetric: false,
             unknown: "lightgray",
-            legend: true,
+            // legend: true,
+            // width: 500,
+            // height: 60,
             label: "Vaccine refusal proportion",
             // percent: true, // convert prop to percent
             domain: [0, 0.1], // restrict range, seems to respect percent conversion
@@ -116,13 +120,25 @@ function roundProp(prop) {
         return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
     }
 }
+```
 
+```js
+const plt = topoPlot(yearVal, { width });
+const legendOptions = {
+    width: 500,
+    height: 60,
+}
+const legend = plt.legend("color", legendOptions);
 ```
 
 <div class="grid grid-cols-1">
     <div class="card">
-        ${yearVal2Input}
-        ${resize((width) => topoPlot(yearVal2, {width}))}
+        <div>
+            ${yearValInput}
+        </div>
+        <!-- ${resize((width) => topoPlot(yearVal, {width}))} -->
+        ${plt}
+        ${legend}
     </div>
 </div>
 
