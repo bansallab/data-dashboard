@@ -1,8 +1,0 @@
-@import url("observablehq:default.css");
-@import url("observablehq:theme-air.css");
-@import url("observablehq:theme-near-midnight.css") all and
-    (prefers-color-scheme: dark);
-
-:root * {
-    font-family: "Roboto", var(--sans-serif);
-}
