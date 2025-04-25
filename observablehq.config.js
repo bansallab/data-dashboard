@@ -49,7 +49,7 @@ export default {
     // footer: "Built with Observable.", // what to show in the footer (HTML)
     // sidebar: true, // whether to show the sidebar
     // toc: true, // whether to show the table of contents
-    pager: false, // whether to show previous & next links in the footer
+    // pager: true, // whether to show previous & next links in the footer
     // output: "dist", // path to the output root for build
     search: true, // activate search
     style: "/style.css",
@@ -63,8 +63,4 @@ export default {
     // typographer: false, // smart quotes and other typographic improvements
     // preserveExtension: false, // drop .html from URLs
     // preserveIndex: false, // drop /index from URLs
-    style: "/custom-style.css",
-    globalStylesheets: [
-        "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap",
-    ],
 };
