@@ -52,6 +52,8 @@ export default {
     // pager: true, // whether to show previous & next links in the footer
     // output: "dist", // path to the output root for build
     search: true, // activate search
+    style: "/style.css",
+    dynamicPaths: ["/font/roboto-v47-latin-regular.woff2"],
     // linkify: true, // convert URLs in Markdown to links
     // typographer: false, // smart quotes and other typographic improvements
     // preserveExtension: false, // drop .html from URLs
