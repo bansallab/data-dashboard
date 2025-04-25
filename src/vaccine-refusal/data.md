@@ -4,61 +4,36 @@ title: Data
 
 # Data
 
-<!-- ```js -->
-<!-- const today = new Date().toISOString().slice(0, 10); -->
-<!-- ``` -->
-<!---->
-<!-- <div class="tip" label="Note">Last updated: ${today}</div> -->
+The dashboard uses data derived from commercial medical claims from both inpatient and outpatient settings across all 50 US states and Washington, D.C from 2016 to 2022. These data are provided by the claims clearinghouse services of a US-based healthcare technology company. To identify and estimate counts of vaccine refusal instances, we rely on International Statistical Classification of Diseases and Related Health Problems, 10th revision (ICD-10) codes present in these claims. We define the following four categories of vaccine refusal based on ICD-10 codes:
 
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Definition  | ICD-10 codes
+----------- | ------------
+Medical     | Z28.01, Z28.02, Z28.03, Z28.04, Z28.09, Z28.81
+Refusal     | Z28.1, Z28.20, Z28.21, Z28.29, Z28.82, Z28.89
+Unavailable | Z28.83
+Unspecified | Z28, Z28.3, Z28.8, Z28.9
 
-## What is the source of the data?
+## What are some limitations of these data?
 
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+These claims data are restricted to commercial settings, meaning Medicare populations are not included. Furthermore, medical claims data are often dependent on healthcare-seeking behavior.
 
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+Due to the risk of re-identification, data for individual counties with populations smaller than 20,000 are unavailable. Instead, data for such counties are pooled with the data of neighboring counties to form more populous groups. To estimate individual counts for these grouped counties, we disaggregate counts using weights derived from the county group member's population as a proportion of the pooled population.
 
-<div class="grid grid-cols-2">
-    <div class="card">
-        <h2>Card 1</h2>
-        Some information
-    </div>
-    <div class="card">
-        <h2>Card 2</h2>
-        More information
-    </div>
+## Are this data available for download?
+
+No. These data are currently not available for download.
+
+## Disclaimer
+
+This dashboard does not provide any medical guidance or vaccination recommendations. Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
+
+For questions or feedback, please reach out to Dr. Shweta Bansal at <b>shweta.bansal@georgetown.edu</b>.
+
+<div class="note" label="Disclaimer">
+    <p>
+        This dashboard does not provide any medical guidance or vaccination recommendations. Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
+    </p>
+    <p>
+        For questions or feedback, please reach out to Dr. Shweta Bansal at <b>shweta.bansal@georgetown.edu</b>.
+    </p>
 </div>
-
-## What is the source of the data?
-
-<div class="tip">Note that...</div>
-
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-## How are the vaccine refusal estimates shown on the dashboard defined?
-
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-## How are the geographic estimates defined?
-
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-## What are some limitations of the data?
-
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-## Is this data available for download?
-
-Yes, the latest data (displayed on this site) can be downloaded here. (We are working on cleaning historical estimates and hope to provide time series data soon.)
-
-## Does the dashboard provide medical guidance?
-
-This dashboard does not provide any medical guidance or vaccination recommendations. For details on your state’s vaccination plan, please consult your state health department website. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
-
-## Can I commercialize this dashboard?
-
-Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
-
-## Who do I contact for questions or feedback?
-
-For questions or feedback, please reach out to Dr. Shweta Bansal at **shweta.bansal@georgetown.edu**.

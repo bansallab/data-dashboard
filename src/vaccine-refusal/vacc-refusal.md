@@ -1,6 +1,5 @@
 ---
 title: Vaccine refusal
-# theme: dashboard
 toc: false
 ---
 
