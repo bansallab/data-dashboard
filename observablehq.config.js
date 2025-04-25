@@ -44,7 +44,7 @@ export default {
     root: "src",
 
     // Some additional configuration options and their defaults:
-    theme: ["near-midnight", "air"], // should defer to user's preferred color scheme
+    // theme: ["near-midnight", "air"], // should defer to user's preferred color scheme
     // header: "", // what to show in the header (HTML)
     // footer: "Built with Observable.", // what to show in the footer (HTML)
     // sidebar: true, // whether to show the sidebar
