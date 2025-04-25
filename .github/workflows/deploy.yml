@@ -44,7 +44,8 @@ jobs:
           OBSERVABLE_TELEMETRY_DEBUG: true
         run: |
           source .venv/bin/activate
-          pnpm build
+          pnpm build 2>&1 | tee telemetry.log
+          cat telemetry.log
       - name: Upload site files
         uses: actions/upload-pages-artifact@v3
         with:
