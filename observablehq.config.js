@@ -53,7 +53,12 @@ export default {
     // output: "dist", // path to the output root for build
     search: true, // activate search
     style: "/style.css",
-    dynamicPaths: ["/font/roboto-v47-latin-regular.woff2"],
+    dynamicPaths: [
+        "/font/roboto-v47-latin-300.woff2",
+        "/font/roboto-v47-latin-regular.woff2",
+        "/font/roboto-v47-latin-italic.woff2",
+        "/font/roboto-v47-latin-700.woff2",
+    ],
     // linkify: true, // convert URLs in Markdown to links
     // typographer: false, // smart quotes and other typographic improvements
     // preserveExtension: false, // drop .html from URLs
