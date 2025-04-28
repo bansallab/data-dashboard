@@ -53,7 +53,7 @@ export default {
     pager: false, // whether to show previous & next links in the footer
     // output: "dist", // path to the output root for build
     search: true, // activate search
-    style: "/style.css",
+    style: "/styles/style.css",
     dynamicPaths: [
         "/font/roboto-v47-latin-300.woff2",
         "/font/roboto-v47-latin-regular.woff2",
