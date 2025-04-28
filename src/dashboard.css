@@ -1,0 +1,10 @@
+/* @import url("observablehq:theme-alt.css"); */
+/* @import url("observablehq:theme-wide.css"); */
+@import url("./style.css");
+
+/* equivalent to theme-alt + theme-wide stylesheets for dashboard theme */
+:root {
+    --observablehq-max-width: 100vw;
+    --theme-background: var(--theme-background-b);
+    --theme-background-alt: var(--theme-background-a);
+}
