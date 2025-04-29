@@ -12,9 +12,17 @@ const countiesGeojson = await shapefile.read(
         readFile("./src/data/cb_2020_us_county_20m/cb_2020_us_county_20m.dbf"),
     ]))
 );
+
 const countiesProj = geoProject(countiesGeojson, geoAlbersUsa());
 
-const countiesTopojson = topology({ counties: countiesProj });
+let countiesTopojson = topology({ counties: countiesProj });
+countiesTopojson.objects.counties.geometries =
+    countiesTopojson.objects.counties.geometries.filter(
+        (county) =>
+            Number(county.properties.STATEFP) >= 1 &&
+            Number(county.properties.STATEFP) <= 56
+    );
+
 let countiesTopoSimp = presimplify(countiesTopojson);
 const minWeight = quantile(countiesTopoSimp, 0.6); // p in range [0, 1], lower is more simplified looking map
 countiesTopoSimp = simplify(countiesTopoSimp, minWeight);

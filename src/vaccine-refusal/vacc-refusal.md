@@ -8,11 +8,27 @@ toc: false
 
 ```js
 import { FileAttachment, resize } from "observablehq:stdlib";
-import * as topojson from "npm:topojson-client";
+import { rewind } from "jsr:@nshiab/journalism/web";
+import * as topojson from "topojson-client";
+import { geoIdentity } from "d3-geo";
 import * as Plot from "npm:@observablehq/plot";
 import * as d3 from "npm:d3";
 
 import Scrubber from "../components/Scrubber.js";
+```
+
+```js
+async function loadGeoData() {
+    // filter: topoCounties.objects.counties.geometries which is arr of Polygon objects
+    const topoCounties = await FileAttachment("../data/us_counties.json").json();
+    // NOTE: fix winding order issue introduced here
+    // geoCounties is GeoJSON FeatureCollection
+    const geoCounties = rewind(topojson.feature(topoCounties, topoCounties.objects.counties));
+
+    return [topoCounties, geoCounties]
+}
+
+const [topoCounties, geoCounties] = await loadGeoData();
 ```
 
 ```js
@@ -35,13 +51,8 @@ const vaccRefusal = await FileAttachment("../data/vacc_refusal.csv").csv().then(
 ```
 
 ```js
-const topoCounties = await FileAttachment("../data/us_counties.json").json();
-// returns GeoJSON FeatureCollection
-const geoCounties = topojson.feature(topoCounties, topoCounties.objects.counties);
-```
-
-```js
 // interior borders only
+// TODO: include this in the geo function above?
 const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, function(a, b) {
     const fipsA = a.properties.STATEFP + a.properties.COUNTYFP;
     const fipsB = b.properties.STATEFP + b.properties.COUNTYFP;
@@ -59,24 +70,31 @@ const yearValInput = Scrubber(d3.range(2016, 2023), {
 });
 const yearVal = view(yearValInput);
 
-function topoPlot(year, { width } = {}) {
-    const out = filterRefusal(vaccRefusal, year);
+function vaccRefusalPlot(year, { width } = {}) {
+    const data = filterRefusal(vaccRefusal, year);
 
+    // TODO: this appears to make sizing responsive; figure out reactive margin/padding
     const plt = Plot.plot({
-        projection: "identity",
+        // or: scale(1300).translate([975/2, 610/2])?
+        // also see d3-geo projection code
+        // https://github.com/d3/d3-geo/blob/8c53a90ae70c94bace73ecb02f2c792c649c86ba/src/projection/albersUsa.js#L20
+        projection: ({width, height}) => geoIdentity().fitSize([width, height], geoCounties),
         width: width,
-        height: 550,
-        margin: 0,
+        // margin: 0,
+        // svg element inline styles
+        // style: {
+        //     padding: "10px",
+        // },
         color: {
             type: "diverging",
             scheme: "BuRd",
-            pivot: 0.05,
-            symmetric: false,
             unknown: "lightgray",
-            // legend: true,
-            // width: 500,
-            // height: 60,
-            label: "Vaccine refusal proportion",
+            pivot: 0.05, // center point
+            symmetric: false,
+            legend: true,
+            width: 700,
+            height: 60,
+            // label: "Vaccine refusal proportion",
             // percent: true, // convert prop to percent
             domain: [0, 0.1], // restrict range, seems to respect percent conversion
         },
@@ -84,10 +102,9 @@ function topoPlot(year, { width } = {}) {
             Plot.geo(
                 geoCounties,
                 {
-                    fill: (d) => out.get(d.properties.GEOID),
-                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(out.get(d.properties.GEOID))}`,
+                    fill: (d) => data.get(d.properties.GEOID),
+                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
                     tip: true,
-                    strokeWidth: 2,
                     className: "county-border",
                 }
             ),
@@ -101,6 +118,16 @@ function topoPlot(year, { width } = {}) {
             ),
         ]
     });
+
+    // HACK: this doesn't feel like a good way to get rid of empty space
+    // const h = d3.select(plt).attr("height");
+    // d3.select(plt).select(".plot-d6a7b5").attr("viewBox", [60, 0, 800, 600]).node();
+
+    // move legend
+    // d3.select(plt)
+    //     .select("svg")
+    //     .raise()
+    //     .style("float", "bottom");
 
     const outlineColor = "#ffffff";
     d3.select(plt)
@@ -123,22 +150,22 @@ function roundProp(prop) {
 ```
 
 ```js
-const plt = topoPlot(yearVal, { width });
-const legendOptions = {
-    width: 500,
-    height: 60,
-}
-const legend = plt.legend("color", legendOptions);
+// const plt = vaccRefusalPlot(yearVal, { width });
+// const legendOptions = {
+//     width: 500,
+//     height: 60,
+// }
+// const legend = plt.legend("color", legendOptions);
+
+// display(width);
 ```
 
-<div class="grid grid-cols-1">
-    <div class="card">
-        <div>
-            ${yearValInput}
-        </div>
-        <!-- ${resize((width) => topoPlot(yearVal, {width}))} -->
-        ${plt}
-        ${legend}
+<div class="card">
+    <div id="scrubber-container">
+        ${yearValInput}
+    </div>
+    <div id="plot-container">
+        ${resize((width) => vaccRefusalPlot(yearVal, { width }))}
     </div>
 </div>
 
