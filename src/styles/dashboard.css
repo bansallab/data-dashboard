@@ -13,10 +13,29 @@
 /*     justify-content: center; */
 /* } */
 
-#scrubber-container {
-    border: 2px solid purple;
+.scrubber-container {
+    border: 1px solid purple;
 }
 
-#plot-container {
-    border: 2px solid red;
+.plot-container {
+    border: 1px solid red;
+}
+
+.legend-container {
+    border: 1px solid steelblue;
+    /* margin: 0; */
+    /* padding: 0; */
+}
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* max-width: 1300px; */
 }
