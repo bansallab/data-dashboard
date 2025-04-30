@@ -17,6 +17,10 @@
     border: 1px solid purple;
 }
 
+.scrubber-label {
+    font-weight: bold;
+}
+
 .plot-container {
     border: 1px solid red;
 }
@@ -38,4 +42,29 @@
     /* align-items: center; */
     /* justify-content: center; */
     /* max-width: 1300px; */
+}
+
+.scrubber-form {
+    display: flex;
+    align-items: center;
+    height: 33px;
+}
+
+.play-pause-button {
+    padding: 0;
+    margin-right: 0.5em;
+    width: 3em;
+}
+
+#label {
+    display: flex;
+    align-items: center;
+}
+
+#input {
+    width: 200px;
+}
+
+#output {
+    margin-left: 0.4em;
 }
