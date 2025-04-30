@@ -19,15 +19,9 @@ These claims data are restricted to commercial settings, meaning Medicare popula
 
 Due to the risk of re-identification, data for individual counties with populations smaller than 20,000 are unavailable. Instead, data for such counties are pooled with the data of neighboring counties to form more populous groups. To estimate individual counts for these grouped counties, we disaggregate counts using weights derived from the county group member's population as a proportion of the pooled population.
 
-## Are this data available for download?
+## Are these data available for download?
 
 No. These data are currently not available for download.
-
-## Disclaimer
-
-This dashboard does not provide any medical guidance or vaccination recommendations. Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
-
-For questions or feedback, please reach out to Dr. Shweta Bansal at <b>shweta.bansal@georgetown.edu</b>.
 
 <div class="note" label="Disclaimer">
     <p>
