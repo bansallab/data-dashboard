@@ -69,6 +69,7 @@ const yearVal = view(yearValInput);
 
 function vaccRefusalPlot(year, { width } = {}) {
     const data = filterRefusal(vaccRefusal, year);
+    // const percent = d3.format(".2%");
 
     // TODO: ideally the margin is also relative to width/height
     // TODO: this might need extra translation too
@@ -87,20 +88,41 @@ function vaccRefusalPlot(year, { width } = {}) {
         // style: {
         //     padding: "10px",
         // },
+        // NOTE: for pct formatting: pivot = 5, percent = true, domain = [0, 10], symmetric = true
         color: {
             type: "diverging",
             scheme: "BuRd",
             unknown: "lightgray",
             pivot: 0.05, // center point
-            symmetric: false,
+            symmetric: true,
             // percent: true, // convert prop to percent
             domain: [0, 0.1], // restrict range, seems to respect percent conversion
+            label: "Vaccine refusal prop.", // will affect tip
         },
         marks: [
             Plot.geo(
                 geoCounties,
                 {
                     fill: (d) => data.get(d.properties.GEOID),
+                    // NOTE: use either title channel *or* all other channels but not both
+                    // with title, I'm really stuffing the data value into it which appears to be non-standard; won't get the small color square
+                    // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
+                    // alt to title:
+                    channels: {
+                        location: {
+                            label: "",
+                            value: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}`,
+                        },
+                    },
+                    tip: {
+                        fontSize: 16,
+                        // lineHeight: 1.2,
+                        // fontWeight: "bold",
+                        format: {
+                            location: true,
+                            fill: true,
+                        },
+                    },
                     className: "county-borders",
                 }
             ),
@@ -112,14 +134,19 @@ function vaccRefusalPlot(year, { width } = {}) {
                     className: "state-mesh",
                 }
             ),
-            Plot.tip(
-                geoCounties,
-                Plot.pointer(Plot.centroid({
-                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
-                    anchor: "bottom",
-                    fontSize: 16,
-                })),
-            ),
+            // Plot.tip(
+            //     geoCounties,
+            //     Plot.pointer(
+            //         Plot.centroid({
+            //             // title: (d) => [d.properties.NAMELSAD, d.properties.STUSPS].join("\n\n"),
+            //             // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}`,
+            //             // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
+            //             fontSize: 18,
+            //             anchor: "bottom",
+            //             pointerSize: 12,
+            //         }),
+            //     ),
+            // ),
         ]
     });
 
@@ -149,6 +176,7 @@ const plt = vaccRefusalPlot(yearVal, { width });
 const legendOptions = {
     width: 500,
     height: 65,
+    label: "", // can override tip label
 }
 const legend = plt.legend("color", legendOptions);
 ```
