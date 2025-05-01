@@ -39,7 +39,7 @@ export default {
         // },
     ],
     // Content to add to the head of the page, e.g. for a favicon:
-    head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
+    head: '<link rel="icon" href="/assets/observable.png" type="image/png" sizes="32x32">',
     // header: "<div>Foo</div>",
     // The path to the source root.
     root: "src",
@@ -55,10 +55,10 @@ export default {
     search: true, // activate search
     style: "/styles/style.css",
     dynamicPaths: [
-        "/font/roboto-v47-latin-300.woff2",
-        "/font/roboto-v47-latin-regular.woff2",
-        "/font/roboto-v47-latin-italic.woff2",
-        "/font/roboto-v47-latin-700.woff2",
+        "/assets/fonts/roboto-v47-latin-300.woff2",
+        "/assets/fonts/roboto-v47-latin-regular.woff2",
+        "/assets/fonts/roboto-v47-latin-italic.woff2",
+        "/assets/fonts/roboto-v47-latin-700.woff2",
     ],
     // linkify: true, // convert URLs in Markdown to links
     // typographer: false, // smart quotes and other typographic improvements
