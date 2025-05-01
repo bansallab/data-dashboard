@@ -2,7 +2,7 @@
 export default {
     title: "Data Dashboard",
     pages: [
-        { name: "About", path: "/about" },
+        // { name: "About", path: "/about" },
         {
             name: "Vaccine refusal",
             pages: [
@@ -14,10 +14,10 @@ export default {
                     name: "Data",
                     path: "/vaccine-refusal/data",
                 },
-                {
-                    name: "Analysis",
-                    path: "/vaccine-refusal/analysis",
-                },
+                // {
+                //     name: "Analysis",
+                //     path: "/vaccine-refusal/analysis",
+                // },
             ],
         },
         // {
