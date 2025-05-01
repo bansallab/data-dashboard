@@ -7,7 +7,7 @@ toc: false
 ## Vaccine refusal
 
 ```js
-import { FileAttachment, resize } from "observablehq:stdlib";
+import { FileAttachment } from "observablehq:stdlib";
 import { rewind } from "jsr:@nshiab/journalism/web";
 import * as topojson from "topojson-client";
 import { geoIdentity } from "d3-geo";
@@ -33,10 +33,10 @@ async function loadGeoData() {
         return fipsA - fipsA % 1000 !== fipsB - fipsB % 1000;
     })
 
-    return [topoCounties, geoCounties, stateMesh]
+    return [geoCounties, stateMesh]
 }
 
-const [topoCounties, geoCounties, stateMesh] = await loadGeoData();
+const [geoCounties, stateMesh] = await loadGeoData();
 ```
 
 ```js
@@ -59,7 +59,10 @@ const vaccRefusal = await FileAttachment("../data/vacc_refusal.csv").csv().then(
 ```
 
 ```js
-const yearValInput = Scrubber(d3.range(2016, 2023), {
+const start = 2016;
+const end = 2023;
+const years = Array.from({length: end - start}, (_, i) => i + start)
+const yearValInput = Scrubber(years, {
     delay: 400,
     loopDelay: 1000,
     autoplay: false,
@@ -69,10 +72,7 @@ const yearVal = view(yearValInput);
 
 function vaccRefusalPlot(year, { width } = {}) {
     const data = filterRefusal(vaccRefusal, year);
-    // const percent = d3.format(".2%");
 
-    // TODO: ideally the margin is also relative to width/height
-    // TODO: this might need extra translation too
     // TODO: is there some inefficient re-render here?
     const xMargin = width * 0.03;
     const yMargin = 0.01;
@@ -91,7 +91,8 @@ function vaccRefusalPlot(year, { width } = {}) {
         // NOTE: for pct formatting: pivot = 5, percent = true, domain = [0, 10], symmetric = true
         color: {
             type: "diverging",
-            scheme: "BuRd",
+            // scheme: "BuRd",
+            scheme: "BuPu",
             unknown: "lightgray",
             pivot: 0.05, // center point
             symmetric: true,
@@ -110,17 +111,21 @@ function vaccRefusalPlot(year, { width } = {}) {
                     // alt to title:
                     channels: {
                         location: {
-                            label: "",
+                            label: "County",
                             value: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}`,
                         },
+                        countyFIPS: {
+                            label: "County FIPS",
+                            value: (d) => `${d.properties.GEOID}`,
+                        }
                     },
                     tip: {
                         fontSize: 16,
-                        // lineHeight: 1.2,
-                        // fontWeight: "bold",
+                        lineHeight: 1.2,
                         format: {
                             location: true,
-                            fill: true,
+                            countyFIPS: true,
+                            fill: roundProp,
                         },
                     },
                     className: "county-borders",
@@ -134,28 +139,16 @@ function vaccRefusalPlot(year, { width } = {}) {
                     className: "state-mesh",
                 }
             ),
-            // Plot.tip(
-            //     geoCounties,
-            //     Plot.pointer(
-            //         Plot.centroid({
-            //             // title: (d) => [d.properties.NAMELSAD, d.properties.STUSPS].join("\n\n"),
-            //             // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}`,
-            //             // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
-            //             fontSize: 18,
-            //             anchor: "bottom",
-            //             pointerSize: 12,
-            //         }),
-            //     ),
-            // ),
         ]
     });
 
-    const outlineColor = "#ffffff";
+    const outlineColor = "var(--plot-background)";
+    const outlineWidth = 2;
     d3.select(plt)
         .select(".county-borders")
         .selectAll("path")
-        .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).raise(); })
-        .on("mouseout", function() { d3.select(this).attr("stroke", null).lower(); });
+        .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).attr("stroke-width", outlineWidth).raise(); })
+        .on("mouseout", function() { d3.select(this).attr("stroke", null).attr("stroke-width", 0).lower(); });
 
     return plt;
 }
@@ -163,15 +156,14 @@ function vaccRefusalPlot(year, { width } = {}) {
 function roundProp(prop) {
     if (isNaN(prop)) {
         return NaN;
-    } else {
-        // return pop.toFixed(2);
-        return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-    }
+    } 
+    // return pop.toFixed(2);
+    // return d3.format(".2%")(prop)
+    return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 }
 ```
 
 ```js
-// resize() helper only needed when rendering within inline ${}?
 const plt = vaccRefusalPlot(yearVal, { width });
 const legendOptions = {
     width: 500,
@@ -187,8 +179,8 @@ const legend = plt.legend("color", legendOptions);
         ${yearValInput}
     </div>
     <div class="plot-container">
-        <!-- ${resize((width) => vaccRefusalPlot(yearVal, { width }))} -->
         ${plt}
+        <!-- ${resize((width) => vaccRefusalPlot(yearVal, { width }))} -->
     </div>
     <div class="legend-container">
         ${legend}

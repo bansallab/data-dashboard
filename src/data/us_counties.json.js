@@ -1,10 +1,10 @@
-import { readFile } from "node:fs/promises";
 import * as shapefile from "shapefile";
+import { readFile } from "node:fs/promises";
 import { geoProject } from "d3-geo-projection";
 import { geoAlbersUsa } from "d3-geo";
 import { topology } from "topojson-server";
-import { quantize } from "topojson-client";
 import { presimplify, quantile, simplify } from "topojson-simplify";
+import { quantize } from "topojson-client";
 
 const countiesGeojson = await shapefile.read(
     ...(await Promise.all([

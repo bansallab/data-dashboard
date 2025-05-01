@@ -1,11 +1,25 @@
+// @ts-check
+// @ts-ignore: Cannot find module
 import { html } from "npm:htl";
+// @ts-ignore: Cannot find module
 import * as Inputs from "npm:@observablehq/inputs";
 
 // from: https://observablehq.com/@mbostock/scrubber
+/**
+ * @param {number[]} values
+ * @param {Object} options
+ * @param {number} options.initial
+ * @param {number} options.direction
+ * @param {number | null} options.delay
+ * @param {boolean} options.autoplay
+ * @param {boolean} options.loop
+ * @param {number | null} options.loopDelay
+ * @param {boolean} options.alternate
+ * @returns {HTMLElement}
+ */
 export default function Scrubber(
     values,
     {
-        format = (value) => value,
         initial = 0,
         direction = 1,
         delay = null,
@@ -13,9 +27,8 @@ export default function Scrubber(
         loop = true,
         loopDelay = null,
         alternate = false,
-    } = {}
+    }
 ) {
-    // values = Array.from(values);
     const form = html`<form class="scrubber-form">
         <button
             name="play_pause"
@@ -33,15 +46,14 @@ export default function Scrubber(
                 step="1"
             />
             <span class="scrubber-label">${values[values.length - 1]}</span>
-            <output name="o"></output>
         </label>
     </form>`;
 
     // from Bootstrap
-    const playButton = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" class="play-pause-icon" viewBox="0 0 16 16">
+    const playButtonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" class="play-pause-icon" viewBox="0 0 16 16">
         <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
     </svg>`;
-    const pauseButton = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" class="play-pause-icon" viewBox="0 0 16 16">
+    const pauseButtonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor" class="play-pause-icon" viewBox="0 0 16 16">
         <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
     </svg>`;
 
@@ -50,16 +62,25 @@ export default function Scrubber(
     let interval = null;
 
     function start() {
-        form.play_pause.innerHTML = pauseButton;
-        if (delay === null) frame = requestAnimationFrame(tick);
-        else interval = setInterval(tick, delay);
+        form.play_pause.innerHTML = pauseButtonIcon;
+        if (delay === null) {
+            frame = requestAnimationFrame(tick);
+        } else {
+            interval = setInterval(tick, delay);
+        }
     }
 
     function stop() {
-        form.play_pause.innerHTML = playButton;
-        if (frame !== null) cancelAnimationFrame(frame), (frame = null);
-        if (timer !== null) clearTimeout(timer), (timer = null);
-        if (interval !== null) clearInterval(interval), (interval = null);
+        form.play_pause.innerHTML = playButtonIcon;
+        if (frame !== null) {
+            cancelAnimationFrame(frame), (frame = null);
+        }
+        if (timer !== null) {
+            clearTimeout(timer), (timer = null);
+        }
+        if (interval !== null) {
+            clearInterval(interval), (interval = null);
+        }
     }
 
     function running() {
@@ -101,12 +122,11 @@ export default function Scrubber(
         form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
     }
 
-    form.i.oninput = (event) => {
+    form.i.oninput = (/**@type {Event} */ event) => {
         if (event && event.isTrusted && running()) {
             stop();
         }
         form.value = values[form.i.valueAsNumber];
-        // form.o.value = format(form.value, form.i.valueAsNumber, values);
     };
     form.play_pause.onclick = () => {
         if (running()) {
