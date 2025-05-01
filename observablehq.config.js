@@ -39,7 +39,7 @@ export default {
         // },
     ],
     // Content to add to the head of the page, e.g. for a favicon:
-    head: '<link rel="icon" href="/assets/observable.png" type="image/png" sizes="32x32">',
+    head: '<link rel="icon" href="/assets/bansal-lab-logo.png" type="image/png" sizes="32x32">',
     // header: "<div>Foo</div>",
     // The path to the source root.
     root: "src",
