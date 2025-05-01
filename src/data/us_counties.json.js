@@ -14,7 +14,6 @@ const countiesGeojson = await shapefile.read(
 );
 
 const countiesProj = geoProject(countiesGeojson, geoAlbersUsa());
-
 let countiesTopojson = topology({ counties: countiesProj });
 countiesTopojson.objects.counties.geometries =
     countiesTopojson.objects.counties.geometries.filter(
@@ -23,9 +22,12 @@ countiesTopojson.objects.counties.geometries =
             Number(county.properties.STATEFP) <= 56
     );
 
+// simplification removes points
 let countiesTopoSimp = presimplify(countiesTopojson);
 const minWeight = quantile(countiesTopoSimp, 0.6); // p in range [0, 1], lower is more simplified looking map
 countiesTopoSimp = simplify(countiesTopoSimp, minWeight);
+// quantization reduces precision of each coord -> smaller TopoJSON file
 countiesTopoSimp = quantize(countiesTopoSimp, 1e6);
 
 process.stdout.write(JSON.stringify(countiesTopoSimp));
+// process.stdout.write(JSON.stringify(countiesTopojson));

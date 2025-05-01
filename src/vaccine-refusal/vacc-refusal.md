@@ -25,7 +25,7 @@ async function loadGeoData() {
     // geoCounties is GeoJSON FeatureCollection
     const geoCounties = rewind(topojson.feature(topoCounties, topoCounties.objects.counties));
 
-    // get interior state borders only
+    // derive state borders from counties; get interior borders only
     const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, function(a, b) {
         const fipsA = a.properties.STATEFP + a.properties.COUNTYFP;
         const fipsB = b.properties.STATEFP + b.properties.COUNTYFP;
@@ -168,7 +168,7 @@ const plt = vaccRefusalPlot(yearVal, { width });
 const legendOptions = {
     width: 500,
     height: 65,
-    label: "", // can override tip label
+    // label: "", // can override tip label
 }
 const legend = plt.legend("color", legendOptions);
 ```

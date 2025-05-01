@@ -25,11 +25,9 @@
 /*     border: 1px solid red; */
 /* } */
 
-.legend-container {
-    /* border: 1px solid steelblue; */
-    /* margin: 0; */
-    /* padding: 0; */
-}
+/* .legend-container { */
+/*     border: 1px solid steelblue; */
+/* } */
 
 .card {
     display: grid;
