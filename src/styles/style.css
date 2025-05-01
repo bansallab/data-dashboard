@@ -9,7 +9,7 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 300;
-    src: url("https://bansallab.github.io/data-dashboard/font/roboto-v47-latin-300.woff2")
+    src: url("https://bansallab.github.io/data-dashboard/assets/font/roboto-v47-latin-300.woff2")
         format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
@@ -19,7 +19,7 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    src: url("https://bansallab.github.io/data-dashboard/font/roboto-v47-latin-regular.woff2")
+    src: url("https://bansallab.github.io/data-dashboard/assets/font/roboto-v47-latin-regular.woff2")
         format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
@@ -29,7 +29,7 @@
     font-family: "Roboto";
     font-style: italic;
     font-weight: 400;
-    src: url("https://bansallab.github.io/data-dashboard/font/roboto-v47-latin-italic.woff2")
+    src: url("https://bansallab.github.io/data-dashboard/assets/font/roboto-v47-latin-italic.woff2")
         format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
@@ -39,7 +39,7 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
-    src: url("https://bansallab.github.io/data-dashboard/font/roboto-v47-latin-700.woff2")
+    src: url("https://bansallab.github.io/data-dashboard/assets/font/roboto-v47-latin-700.woff2")
         format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
