@@ -181,12 +181,6 @@ const legendOptions = {
 const legend = plt.legend("color", legendOptions);
 ```
 
-```js
-const start = 2016;
-const end = 2023;
-display(Array.from({length: end - start}, (_, i) => i + start));
-```
-
 <div class="card">
     <h1>${yearVal}</h1>
     <div class="scrubber-container">

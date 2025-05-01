@@ -13,20 +13,20 @@
 /*     justify-content: center; */
 /* } */
 
-.scrubber-container {
-    border: 1px solid purple;
-}
+/* .scrubber-container { */
+/*     border: 1px solid purple; */
+/* } */
 
 .scrubber-label {
     font-weight: bold;
 }
 
-.plot-container {
-    border: 1px solid red;
-}
+/* .plot-container { */
+/*     border: 1px solid red; */
+/* } */
 
 .legend-container {
-    border: 1px solid steelblue;
+    /* border: 1px solid steelblue; */
     /* margin: 0; */
     /* padding: 0; */
 }
