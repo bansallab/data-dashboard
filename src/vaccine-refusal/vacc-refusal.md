@@ -1,17 +1,42 @@
 ---
 title: Vaccine refusal
+style: ../styles/dashboard.css
 toc: false
 ---
 
 ## Vaccine refusal
 
 ```js
-import { FileAttachment, resize } from "observablehq:stdlib";
-import * as topojson from "npm:topojson-client";
+import { FileAttachment } from "observablehq:stdlib";
+import { rewind } from "jsr:@nshiab/journalism/web";
+import * as topojson from "topojson-client";
+import { geoIdentity } from "d3-geo";
 import * as Plot from "npm:@observablehq/plot";
 import * as d3 from "npm:d3";
 
 import Scrubber from "../components/Scrubber.js";
+```
+
+```js
+async function loadGeoData() {
+    // filter: topoCounties.objects.counties.geometries which is arr of Polygon objects
+    const topoCounties = await FileAttachment("../data/us_counties.json").json();
+    // NOTE: fix winding order issue introduced here
+    // geoCounties is GeoJSON FeatureCollection
+    const geoCounties = rewind(topojson.feature(topoCounties, topoCounties.objects.counties));
+
+    // derive state borders from counties; get interior borders only
+    const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, function(a, b) {
+        const fipsA = a.properties.STATEFP + a.properties.COUNTYFP;
+        const fipsB = b.properties.STATEFP + b.properties.COUNTYFP;
+
+        return fipsA - fipsA % 1000 !== fipsB - fipsB % 1000;
+    })
+
+    return [geoCounties, stateMesh]
+}
+
+const [geoCounties, stateMesh] = await loadGeoData();
 ```
 
 ```js
@@ -34,23 +59,10 @@ const vaccRefusal = await FileAttachment("../data/vacc_refusal.csv").csv().then(
 ```
 
 ```js
-const topoCounties = await FileAttachment("../data/us_counties.json").json();
-// returns GeoJSON FeatureCollection
-const geoCounties = topojson.feature(topoCounties, topoCounties.objects.counties);
-```
-
-```js
-// interior borders only
-const stateMesh = topojson.mesh(topoCounties, topoCounties.objects.counties, function(a, b) {
-    const fipsA = a.properties.STATEFP + a.properties.COUNTYFP;
-    const fipsB = b.properties.STATEFP + b.properties.COUNTYFP;
-
-    return fipsA - fipsA % 1000 !== fipsB - fipsB % 1000;
-})
-```
-
-```js
-const yearValInput = Scrubber(d3.range(2016, 2023), {
+const start = 2016;
+const end = 2023;
+const years = Array.from({length: end - start}, (_, i) => i + start)
+const yearValInput = Scrubber(years, {
     delay: 400,
     loopDelay: 1000,
     autoplay: false,
@@ -58,36 +70,65 @@ const yearValInput = Scrubber(d3.range(2016, 2023), {
 });
 const yearVal = view(yearValInput);
 
-function topoPlot(year, { width } = {}) {
-    const out = filterRefusal(vaccRefusal, year);
+function vaccRefusalPlot(year, { width } = {}) {
+    const data = filterRefusal(vaccRefusal, year);
 
+    // TODO: is there some inefficient re-render here?
+    const xMargin = width * 0.03;
+    const yMargin = 0.01;
     const plt = Plot.plot({
-        projection: "identity",
-        width: width,
-        height: 550,
+        // or: scale(1300).translate([975/2, 610/2])?
+        // also see d3-geo projection code
+        // https://github.com/d3/d3-geo/blob/8c53a90ae70c94bace73ecb02f2c792c649c86ba/src/projection/albersUsa.js#L20
+        projection: ({width, height}) => geoIdentity().fitSize([width - (xMargin * 2), height - (yMargin * height)], geoCounties),
+        width: Math.max(width, 1300),
+        height: 750, // forces height
         margin: 0,
+        // svg element inline styles
+        // style: {
+        //     padding: "10px",
+        // },
+        // NOTE: for pct formatting: pivot = 5, percent = true, domain = [0, 10], symmetric = true
         color: {
             type: "diverging",
-            scheme: "BuRd",
-            pivot: 0.05,
-            symmetric: false,
+            // scheme: "BuRd",
+            scheme: "BuPu",
             unknown: "lightgray",
-            // legend: true,
-            // width: 500,
-            // height: 60,
-            label: "Vaccine refusal proportion",
+            pivot: 0.05, // center point
+            symmetric: true,
             // percent: true, // convert prop to percent
             domain: [0, 0.1], // restrict range, seems to respect percent conversion
+            label: "Vaccine refusal prop.", // will affect tip
         },
         marks: [
             Plot.geo(
                 geoCounties,
                 {
-                    fill: (d) => out.get(d.properties.GEOID),
-                    title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(out.get(d.properties.GEOID))}`,
-                    tip: true,
-                    strokeWidth: 2,
-                    className: "county-border",
+                    fill: (d) => data.get(d.properties.GEOID),
+                    // NOTE: use either title channel *or* all other channels but not both
+                    // with title, I'm really stuffing the data value into it which appears to be non-standard; won't get the small color square
+                    // title: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}\nprop. = ${roundProp(data.get(d.properties.GEOID))}`,
+                    // alt to title:
+                    channels: {
+                        location: {
+                            label: "County",
+                            value: (d) => `${d.properties.NAMELSAD}, ${d.properties.STUSPS}`,
+                        },
+                        countyFIPS: {
+                            label: "County FIPS",
+                            value: (d) => `${d.properties.GEOID}`,
+                        }
+                    },
+                    tip: {
+                        fontSize: 16,
+                        lineHeight: 1.2,
+                        format: {
+                            location: true,
+                            countyFIPS: true,
+                            fill: roundProp,
+                        },
+                    },
+                    className: "county-borders",
                 }
             ),
             Plot.geo(
@@ -101,12 +142,13 @@ function topoPlot(year, { width } = {}) {
         ]
     });
 
-    const outlineColor = "#ffffff";
+    const outlineColor = "var(--plot-background)";
+    const outlineWidth = 2;
     d3.select(plt)
-        .select(".county-border")
+        .select(".county-borders")
         .selectAll("path")
-        .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).raise(); })
-        .on("mouseout", function() { d3.select(this).attr("stroke", null).lower(); });
+        .on("mouseover", function() { d3.select(this).attr("stroke", outlineColor).attr("stroke-width", outlineWidth).raise(); })
+        .on("mouseout", function() { d3.select(this).attr("stroke", null).attr("stroke-width", 0).lower(); });
 
     return plt;
 }
@@ -114,29 +156,33 @@ function topoPlot(year, { width } = {}) {
 function roundProp(prop) {
     if (isNaN(prop)) {
         return NaN;
-    } else {
-        // return pop.toFixed(2);
-        return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-    }
+    } 
+    // return pop.toFixed(2);
+    // return d3.format(".2%")(prop)
+    return prop.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 }
 ```
 
 ```js
-const plt = topoPlot(yearVal, { width });
+const plt = vaccRefusalPlot(yearVal, { width });
 const legendOptions = {
     width: 500,
-    height: 60,
+    height: 65,
+    // label: "", // can override tip label
 }
 const legend = plt.legend("color", legendOptions);
 ```
 
-<div class="grid grid-cols-1">
-    <div class="card">
-        <div>
-            ${yearValInput}
-        </div>
-        <!-- ${resize((width) => topoPlot(yearVal, {width}))} -->
+<div class="card">
+    <h1>${yearVal}</h1>
+    <div class="scrubber-container">
+        ${yearValInput}
+    </div>
+    <div class="plot-container">
         ${plt}
+        <!-- ${resize((width) => vaccRefusalPlot(yearVal, { width }))} -->
+    </div>
+    <div class="legend-container">
         ${legend}
     </div>
 </div>

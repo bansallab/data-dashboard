@@ -1,0 +1,68 @@
+@import url("./style.css");
+
+/* equivalent to theme-alt + theme-wide stylesheets for dashboard theme */
+:root {
+    --observablehq-max-width: 100vw;
+    --theme-background: var(--theme-background-b);
+    --theme-background-alt: var(--theme-background-a);
+}
+
+/* .card { */
+/*     display: flex; */
+/*     flex-direction: column; */
+/*     justify-content: center; */
+/* } */
+
+/* .scrubber-container { */
+/*     border: 1px solid purple; */
+/* } */
+
+.scrubber-label {
+    font-weight: bold;
+}
+
+/* .plot-container { */
+/*     border: 1px solid red; */
+/* } */
+
+/* .legend-container { */
+/*     border: 1px solid steelblue; */
+/* } */
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* max-width: 1300px; */
+}
+
+.scrubber-form {
+    display: flex;
+    align-items: center;
+    height: 33px;
+}
+
+.play-pause-button {
+    padding: 0;
+    margin-right: 0.5em;
+    width: 3em;
+}
+
+#label {
+    display: flex;
+    align-items: center;
+}
+
+#input {
+    width: 200px;
+}
+
+#output {
+    margin-left: 0.4em;
+}
