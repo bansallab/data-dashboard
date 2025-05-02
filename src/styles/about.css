@@ -1,0 +1,27 @@
+@import url("./style.css");
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.card {
+    margin: 0;
+    /* text-align: center; */
+}
+
+.profile-picture {
+    width: 200px;
+    height: 250px;
+}
+
+.profile-picture img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem; /* match card's pre-defined border-radius */
+}
+
+.profile-info {
+    margin: 0.5rem;
+}

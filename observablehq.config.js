@@ -2,7 +2,7 @@
 export default {
     title: "Data Dashboard",
     pages: [
-        // { name: "About", path: "/about" },
+        { name: "About", path: "/about" },
         {
             name: "Vaccine refusal",
             pages: [
