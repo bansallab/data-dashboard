@@ -191,4 +191,13 @@ Click the play button or drag the slider to see how county-level vaccine hesitan
     </div>
 </div>
 
+<div class="note" label="Disclaimer">
+    <p>
+        This dashboard does not provide any medical guidance or vaccination recommendations. Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
+    </p>
+    <p>
+        For questions or feedback, please reach out to Dr. Shweta Bansal at <b>shweta.bansal@georgetown.edu</b>.
+    </p>
+</div>
+
 <!-- <div style="min-height: 100vh"></div> -->
