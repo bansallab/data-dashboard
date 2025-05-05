@@ -1,5 +1,5 @@
 ---
-title: Vaccine refusal
+title: Dashboard
 style: ../styles/dashboard.css
 toc: false
 ---

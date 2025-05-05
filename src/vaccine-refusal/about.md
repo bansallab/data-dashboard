@@ -1,11 +1,11 @@
 ---
 title: About
-style: ./styles/about.css
+style: ../styles/about.css
 ---
 
 # About
 
-This project is led by a team of researchers at the [Bansal lab](https://www.bansallab.com/) at Georgetown University.
+This [dashboard](./dashboard) compiles spatial data on childhood vaccine hesitancy in the United States at a county scale. For more information, see the [data](./data) page. This project is led by a team of researchers at the [Bansal lab](https://www.bansallab.com/) at Georgetown University.
 
 <div class="card-container">
     <div class="card">
