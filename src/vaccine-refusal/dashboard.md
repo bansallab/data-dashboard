@@ -173,6 +173,10 @@ const legendOptions = {
 const legend = plt.legend("color", legendOptions);
 ```
 
+It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+
+Click the play button or drag the slider to see how county-level vaccine hesitancy rates change over the years (from 2016-2022). Hover your cursor over a specific county for additional details.
+
 <div class="card">
     <h1>${yearVal}</h1>
     <div class="scrubber-container">
