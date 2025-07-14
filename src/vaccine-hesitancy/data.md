@@ -4,7 +4,11 @@ title: Data
 
 # Data
 
-The dashboard uses data derived from commercial medical claims from both inpatient and outpatient settings across all 50 US states and Washington, D.C from 2016 to 2022. These data are provided by the claims clearinghouse services of a US-based healthcare technology company. To identify and estimate counts of vaccine refusal instances, we rely on International Statistical Classification of Diseases and Related Health Problems, 10th revision (ICD-10) codes present in these claims. We define the following four categories of vaccine refusal based on ICD-10 codes:
+We gathered medical claims data to estimate county-level vaccine hesitancy rates from 2016 to 2022.
+
+## What is the source of the data?
+
+The dashboard uses data derived from commercial medical claims from both inpatient and outpatient settings across all 50 US states and Washington, D.C from 2016 to 2022. These data are provided by the claims clearinghouse services of a US-based healthcare technology company. To identify and estimate counts of vaccine hesitancy instances, we rely on International Statistical Classification of Diseases and Related Health Problems, 10th revision (ICD-10) codes present in these claims. We define the following four categories of vaccine hesitancy based on ICD-10 codes:
 
 Definition  | ICD-10 codes
 ----------- | ------------

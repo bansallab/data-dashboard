@@ -1,0 +1,45 @@
+{
+  // see here: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+  "config": {
+    "default": true,
+    "heading-style": {
+      "style": "atx"
+    },
+    "no-inline-html": {
+      "allowed_elements": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "p",
+        "b",
+        "div"
+      ]
+    },
+    "ul-style": {
+      "style": "dash"
+    },
+    "fenced-code-language": true,
+    "no-multiple-blanks": 1,
+    "line-length": false,
+    "first-line-h1": true,
+    "single-title": {
+      // disable use of frontmatter for determining H1
+      // since it conflicts with actual markdown H1
+      // see: https://github.com/DavidAnson/markdownlint/blob/224987d727ebada36752074d2466a061c9e03ff0/doc/md025.md
+      "front_matter_title": ""
+    },
+    "ul-indent": {
+      "indent": 4
+    }
+    // "no-duplicate-heading": {
+    //   "siblings_only": true
+    // },
+    // "descriptive-link-text": {
+    //   "prohibited_texts": []
+    // }
+  },
+  "gitignore": true
+}

@@ -3,23 +3,23 @@ export default {
     title: "Data Dashboard",
     pages: [
         {
-            name: "Vaccine refusal",
+            name: "Vaccine hesitancy",
             pages: [
                 {
                     name: "About",
-                    path: "/vaccine-refusal/about",
+                    path: "/vaccine-hesitancy/about",
                 },
                 {
                     name: "Dashboard",
-                    path: "/vaccine-refusal/dashboard",
+                    path: "/vaccine-hesitancy/dashboard",
                 },
                 {
                     name: "Data",
-                    path: "/vaccine-refusal/data",
+                    path: "/vaccine-hesitancy/data",
                 },
                 // {
                 //     name: "Analysis",
-                //     path: "/vaccine-refusal/analysis",
+                //     path: "/vaccine-hesitancy/analysis",
                 // },
             ],
         },

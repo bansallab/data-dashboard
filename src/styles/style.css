@@ -46,3 +46,7 @@
 :root * {
     font-family: "Roboto", var(--sans-serif);
 }
+
+h1 {
+    font-size: 40px;
+}

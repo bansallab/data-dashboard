@@ -4,7 +4,7 @@ style: ../styles/dashboard.css
 toc: false
 ---
 
-## Vaccine refusal
+# Vaccine hesitancy
 
 ```js
 import { FileAttachment } from "observablehq:stdlib";
@@ -98,7 +98,7 @@ function vaccRefusalPlot(year, { width } = {}) {
             symmetric: true,
             // percent: true, // convert prop to percent
             domain: [0, 0.1], // restrict range, seems to respect percent conversion
-            label: "Vaccine refusal prop.", // will affect tip
+            label: "Vaccine hesitancy prop.", // will affect tip
         },
         marks: [
             Plot.geo(
@@ -173,25 +173,41 @@ const legendOptions = {
 const legend = plt.legend("color", legendOptions);
 ```
 
-It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
-
-Click the play button or drag the slider to see how county-level vaccine hesitancy rates change over the years (from 2016-2022). Hover your cursor over a specific county for additional details.
+<div>
+    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+</div>
 
 <div class="card">
-    <h1>${yearVal}</h1>
-    <div class="scrubber-container">
-        ${yearValInput}
-    </div>
-    <div class="plot-container">
-        ${plt}
-        <!-- ${resize((width) => vaccRefusalPlot(yearVal, { width }))} -->
-    </div>
-    <div class="legend-container">
-        ${legend}
+    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+</div>
+
+<div class="note" label="">
+    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+</div>
+
+<div class="card">
+    <h2>
+        County-level vaccine hesitancy rates from 2016 to 2022
+    </h2>
+    <h3>
+        Click the play button or drag the slider to see how county-level vaccine hesitancy rates change over the years (from 2016-2022). Hover your cursor over a specific county for additional details. Counties filled with light gray were deemed to have unreliable data because of a lack of overall claims data.
+    </h3>
+    <div class="card-container">
+        <h1>${yearVal}</h1>
+        <div class="scrubber-container">
+            ${yearValInput}
+        </div>
+        <div class="plot-container">
+            ${plt}
+            <!-- ${resize((width) => vaccRefusalPlot(yearVal, { width }))} -->
+        </div>
+        <div class="legend-container">
+            ${legend}
+        </div>
     </div>
 </div>
 
-<div class="note" label="Disclaimer">
+<div id="disclaimer" class="note" label="Disclaimer">
     <p>
         This dashboard does not provide any medical guidance or vaccination recommendations. Use of this dashboard for commercial purposes is strictly prohibited. Georgetown University is not responsible for the accuracy, fitness for use, and merchantability of this product.
     </p>
