@@ -173,16 +173,12 @@ const legendOptions = {
 const legend = plt.legend("color", legendOptions);
 ```
 
-<div>
-    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
-</div>
-
-<div class="card">
-    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
-</div>
-
-<div class="note" label="">
-    It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+<div class="intro">
+    <p>
+        <em>
+            It is crucial to monitor spatiotemporal changes in vaccine hesitancy in the United States to better understand areas of vulnerability. This can help guide public health efforts and track progress.
+        </em>
+    </p>
 </div>
 
 <div class="card">

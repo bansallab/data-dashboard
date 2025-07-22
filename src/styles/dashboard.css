@@ -7,44 +7,36 @@
     --theme-background-alt: var(--theme-background-a);
 }
 
-/* .card { */
-/*     display: flex; */
-/*     flex-direction: column; */
-/*     justify-content: center; */
-/* } */
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* border: 1px solid red; */
+}
 
-/* .scrubber-container { */
-/*     border: 1px solid purple; */
-/* } */
+.intro p {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 800px;
+    /* border: 1px solid blue; */
+}
 
 .scrubber-label {
     font-weight: bold;
 }
 
-/* .plot-container { */
-/*     border: 1px solid red; */
+/* #disclaimer { */
+/*     margin-left: auto; */
+/*     margin-right: 0; */
 /* } */
-
-/* .legend-container { */
-/*     border: 1px solid steelblue; */
-/* } */
-
-#disclaimer {
-    margin-left: auto;
-    margin-right: 0;
-}
 
 .card-container {
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
     align-items: center;
-
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* max-width: 1300px; */
 }
 
 .scrubber-form {

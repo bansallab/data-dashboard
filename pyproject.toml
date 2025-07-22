@@ -6,5 +6,10 @@ dependencies = [
     "polars>=1.26.0",
 ]
 
+[tool.basedpyright]
+include = ["src/data/vacc_refusal.csv.py"]
+pythonVersion = "3.13"
+pythonPlatform = "Linux"
+
 [dependency-groups]
 dev = []
