@@ -2,35 +2,17 @@
 
 /* equivalent to theme-alt + theme-wide stylesheets for dashboard theme */
 :root {
-    --observablehq-max-width: 100vw;
     --theme-background: var(--theme-background-b);
     --theme-background-alt: var(--theme-background-a);
 }
 
-.intro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    /* border: 1px solid red; */
-}
-
 .intro p {
-    display: inline-block;
-    vertical-align: middle;
-    min-width: 800px;
-    /* border: 1px solid blue; */
+    min-width: 100%;
 }
 
 .scrubber-label {
     font-weight: bold;
 }
-
-/* #disclaimer { */
-/*     margin-left: auto; */
-/*     margin-right: 0; */
-/* } */
 
 .card-container {
     display: grid;

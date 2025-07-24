@@ -44,6 +44,7 @@
 }
 
 :root * {
+    --observablehq-max-width: 100vw;
     font-family: "Roboto", var(--sans-serif);
 }
 
