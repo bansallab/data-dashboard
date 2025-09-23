@@ -168,7 +168,7 @@ const plt = vaccRefusalPlot(yearVal, { width });
 const legendOptions = {
     width: 500,
     height: 65,
-    // label: "", // can override tip label
+    // label: "", // override legend title
 }
 const legend = plt.legend("color", legendOptions);
 ```
