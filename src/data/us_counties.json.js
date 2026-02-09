@@ -10,7 +10,7 @@ const countiesGeojson = await shapefile.read(
     ...(await Promise.all([
         readFile("./src/data/cb_2020_us_county_20m/cb_2020_us_county_20m.shp"),
         readFile("./src/data/cb_2020_us_county_20m/cb_2020_us_county_20m.dbf"),
-    ]))
+    ])),
 );
 
 const countiesProj = geoProject(countiesGeojson, geoAlbersUsa());
@@ -19,7 +19,7 @@ countiesTopojson.objects.counties.geometries =
     countiesTopojson.objects.counties.geometries.filter(
         (county) =>
             Number(county.properties.STATEFP) >= 1 &&
-            Number(county.properties.STATEFP) <= 56
+            Number(county.properties.STATEFP) <= 56,
     );
 
 // simplification removes points

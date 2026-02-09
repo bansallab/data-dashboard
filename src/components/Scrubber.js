@@ -27,7 +27,7 @@ export default function Scrubber(
         loop = true,
         loopDelay = null,
         alternate = false,
-    }
+    },
 ) {
     const form = html`<form class="scrubber-form">
         <button
