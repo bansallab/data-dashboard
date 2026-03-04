@@ -1,4 +1,3 @@
-import random
 import sys
 
 import polars as pl
@@ -13,7 +12,6 @@ def main() -> int:
             "annual_ratio": pl.String,
         },
         columns=["county_fips", "year", "annual_ratio"],
-        # null_values="NA",
     ).sort("year", "county_fips")
 
     df.write_csv(sys.stdout)
